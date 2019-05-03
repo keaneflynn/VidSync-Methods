@@ -76,13 +76,15 @@ VidSync_Test_Data <- readr::read_csv(file = "VidSync-TestData.csv",
                              col_names = c("objects", "event", "timecode", "time_sec", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
                     col_types = "cccdddddddd") %>% 
   mutate(subsample = as.numeric(str_extract(objects, "\\d"))) %>% #This column will identify which of the 6 subsamples the data belongs to.
-  mutate(fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>% #A fish ID denotes a unique individual during each subsample. Unique individuals can be tracked across subsamples if desired, but must be given a unique name in the "Name" option when the Event is specified when entering which subsample is being processed in VidSync.
+  mutate(fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>% #A fish ID denotes a unique individual during each subsample. Unique individuals can be tracked across subsamples if desired, but must be given a unique name in the "Name" option (i.e. Omykiss-A1) when the Event type is specified while being processed in VidSync.
   mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>% #Note that the use of regular expressions in this line are to be specified to whatever species are being recorded in your experiment and excluding any non-relevant ones.
   select(subsample, fish_ID, species, time_sec, X, Y, Z, objects, event) #All other data vectors were excluded for the sake of neatness and what is useful in the metrics below.
 ```
 ##Nearest Neighbor Distance
 
-    Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954). NND is calculated by finding the nearest neighbor to each unique fish over the course of a subsample. The final NND column will return a single NND value for each fish in a subsample and represent the closest nearest neighbor for each fish and exclude any larger distances (in cm) so as to not skew the data away from any values that are the absolute nearest neighbor point over the course of the subsample. It is important to note that subsamples with only one observed fish will produce an NND that is infinite and should be dealt with accordingly when graphing/calculating statistics of these values. The exemplary data is as follows:
+    Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954). NND is calculated by finding the nearest neighbor to each unique fish over the course of a subsample. The final NND column will return a single NND value for each fish in a subsample and represent the closest nearest neighbor for each fish and exclude any larger distances (in cm) so as to not skew the data away from any values that are the absolute nearest neighbor point over the course of the subsample. It is important to note that subsamples with only one observed fish will produce an NND that is infinite and should be dealt with accordingly when graphing/calculating statistics of these values.
+    
+    The exemplary data is as follows:
 ```{r}
 NND_Data <- VidSync_Test_Data %>% 
   filter(grepl("^Subsample.*", objects)) %>% #In the following two lines of code, we will be removing any extraneous data points that are not relevant to the regular 3 second interval sample points taken.
@@ -106,8 +108,9 @@ NND_Data <- VidSync_Test_Data %>%
 ```
 ##Distance per Time
 
-    Calculating distance per time is calculated by tracking a specific individual over the course 
-The exemplary data is as follows:
+    Calculating distance per time is calculated by tracking a specific individual over the course of a subsample and dividing the distance travelled between each sample point by the time between each point. The distance between each point is calculated using the three dimensional distance formula: sqrt((X1-X2)^2+(Y1-Y2)^2+(Z1-Z2)^2).
+    
+    The exemplary data is as follows:
 ```{r}
 DistancePerTime_Data <- VidSync_Test_Data %>% 
   filter(!grepl("Surface_Shots.*", objects)) %>%
@@ -126,9 +129,11 @@ DistancePerTime_Data <- VidSync_Test_Data %>%
   arrange(subsample, fish_ID, time_sec) %>%
   select(subsample, fish_ID, time_sec, distance_cm_per_sec)
 ```
-##Proportion of Forage Behaviors
+##Proportion of Behaviors
 
-The exemplary data is as follows:
+    To assign a behavior type we use regular expressions to identify the behavior from the predetermined object type as specified above in the behavioral classification section. After each sample point has been identified and placed in a bin of behavior types, specific behaviors can then be filtered out depending upon the target variables (i.e. only foraging behavior types).
+    
+    The exemplary data is as follows:
 ```{r}
 ForageBehaviors_Data <- VidSync_Test_Data %>% 
   filter(!grepl("Surface_Shots.*", objects)) %>%
@@ -145,8 +150,10 @@ ForageBehaviors_Data <- VidSync_Test_Data %>%
   select(subsample, fish_ID, time_sec, Behaviors)
 ```
 ##Centroid to Forage Attempt Point
-It is important to note that this chunk of code is only relevant in scenarios where the created points over a given subsample if points are recorded at specific forage events rather than sequential 3 second intervals throughout each subsample (Neuswanger 2014; Glass 2013).
-The exemplary data is as follows:
+
+    It is important to note that this chunk of code is only relevant in scenarios where the created points over a given subsample if points are recorded at specific forage events rather than sequential 3 second intervals throughout each subsample (Neuswanger 2014; Glass 2013).
+    
+    The exemplary data is as follows:
 ```{r}
 ControidToForage_Data <- VidSync_Test_Data %>% 
   filter(!grepl("Surface_Shots.*", objects)) %>%
@@ -161,6 +168,8 @@ ControidToForage_Data <- VidSync_Test_Data %>%
   select(subsample, fish_ID, time_sec, distance_to_forage_point_cm)
 ```
 ##Distance from Surface
+
+    
 ```{r, warning=FALSE}
 DFS_Mean <- VidSync_Test_Data %>% 
   filter(grepl("Surface_Shots.*", objects)) %>% 
@@ -178,6 +187,8 @@ DistFromSurface_Data <- VidSync_Test_Data %>%
   select(subsample, fish_ID, DFS_cm)
 ```
 ##Fork Length Calculations
+
+    
 ```{R}
 Length_Data <- VidSync_Test_Data %>% 
   filter(grepl("^Length.*", event)) %>% 
@@ -217,21 +228,21 @@ for (i in 1:33) {
 }
 ```
 #Discussion
-##Nearest Neighbor Distance
+###*Nearest Neighbor Distance*
 
     Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954).
     
-##Distance per Time
+###*Distance per Time*
 
-##Proportion of Forage Behaviors
+###*Proportion of Forage Behaviors*
 
-##Centroid to Forage Attempt Point
+###*Centroid to Forage Attempt Point*
 
-##Distance from Surface
+###*Distance from Surface*
 
-##Fork Length Calculations
+###*Fork Length Calculations*
 
-##Occupied Volumes
+###*Occupied Volumes*
 
     Previously the habitat use of a foraging fish has been defined as a two dimensional area made from position estimations of fish from snorkel observations. 
     hypervolume definition
