@@ -55,6 +55,7 @@ output:
 
 ##R-code and Exemplary Data for Quantitative and Qualitative Behavioral Metrics
 
+    For data analyzation, we will be using R-Studio to compute the following metrics (RStudio Team 2015). They can be imported into other softwares such as MATLAB and Wolfram Mathematica, however for the level of analyzation being performed below, we have found that using R-Studio is the most simple method with the most amount of support.
 ###Loading Necessary Libraries
 ```{r setup, include = TRUE, message = FALSE}
 library(dplyr)
@@ -63,34 +64,30 @@ library(tidyverse)
 library(ggplot2)
 library(geometry)
 library(rgl)
-library(hypervolume)
 library(zoo)
 library(stringr)
-library(data.table)
 ```
 ##Importing VidSync CSV File
 
-    Data from VidSync can either be exported as an XML or CSV file, for our application we will be exporting it as the latter into R for analyzation. Upon importing it, we will be cleaning up some of the data vectors using regular expression matching (see r-package stringr)
+    Data from VidSync can either be exported as an XML or CSV file, for our application we will be exporting it as the latter into R for analyzation. Upon importing it, we will be cleaning up some of the data vectors using regular expression matching for ease of operation through the Stringr package in R (Whickam 2018). 
 ```{r warning=FALSE}
 VidSync_Test_Data <- readr::read_csv(file = "VidSync-TestData.csv", 
                              skip = 2,
                              col_names = c("objects", "event", "timecode", "time_sec", "X", "Y", "Z", "pld_error", "projection_error", "nearest_camera_distance", "screen_coordinates"),
                     col_types = "cccdddddddd") %>% 
-  mutate(subsample = as.numeric(str_extract(objects, "\\d"))) %>%
-  mutate(fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>%
-  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>% #Note that the use of regular expressions in this line are to be specified to whatever species are recorded in your experiment and excluding any non-relevant ones
-  select(subsample, fish_ID, species, time_sec, X, Y, Z, objects, event) #All other data vectors were excluded for the sake of neatness and what is useful in the metrics below
+  mutate(subsample = as.numeric(str_extract(objects, "\\d"))) %>% #This column will identify which of the 6 subsamples the data belongs to.
+  mutate(fish_ID = as.numeric(str_extract(objects, "\\h\\d{1,2}"))) %>% #A fish ID denotes a unique individual during each subsample. Unique individuals can be tracked across subsamples if desired, but must be given a unique name in the "Name" option when the Event is specified when entering which subsample is being processed in VidSync.
+  mutate(species = str_extract(objects, "Omykiss|Okisutch")) %>% #Note that the use of regular expressions in this line are to be specified to whatever species are being recorded in your experiment and excluding any non-relevant ones.
+  select(subsample, fish_ID, species, time_sec, X, Y, Z, objects, event) #All other data vectors were excluded for the sake of neatness and what is useful in the metrics below.
 ```
 ##Nearest Neighbor Distance
-Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954). NND is calculated by finding the nearest neighbor to each unique fish over the course of a subsample. The final NND column will return a single NND value for each fish in a subsample and represent the closest nearest neighbor for each fish and exclude any larger distances (in cm) so as to not skew the data away from any values that are the absolute nearest neighbor point over the course of the subsample. It is important to note that subsamples with only one observed fish will produce an NND that is infinite and should be dealt with accordingly when graphing/calculating statistics of these values. 
-The exemplary data is as follows:
+
+    Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954). NND is calculated by finding the nearest neighbor to each unique fish over the course of a subsample. The final NND column will return a single NND value for each fish in a subsample and represent the closest nearest neighbor for each fish and exclude any larger distances (in cm) so as to not skew the data away from any values that are the absolute nearest neighbor point over the course of the subsample. It is important to note that subsamples with only one observed fish will produce an NND that is infinite and should be dealt with accordingly when graphing/calculating statistics of these values. The exemplary data is as follows:
 ```{r}
 NND_Data <- VidSync_Test_Data %>% 
-  filter(grepl("^Subsample.*", objects)) %>%
+  filter(grepl("^Subsample.*", objects)) %>% #In the following two lines of code, we will be removing any extraneous data points that are not relevant to the regular 3 second interval sample points taken.
   filter(!grepl("^Length.*", event)) %>%
-  filter(!grepl("^Attack.*", event)) %>%
-  filter(!grepl("^Feint.*", event)) %>%
-  na.omit() %>% #To remove any additional rows from the data set not associated with fish (i.e. surface shots)
+  na.omit() %>% #To remove any additional rows from the data set not associated with fish (i.e. surface shots).
   arrange(time_sec) %>%
   group_by(time_sec) %>%
   mutate(distance_between_X = X - lag(X, default = first(X))) %>%
@@ -108,6 +105,8 @@ NND_Data <- VidSync_Test_Data %>%
   select(subsample, fish_ID, nnd_cm) 
 ```
 ##Distance per Time
+
+    Calculating distance per time is calculated by tracking a specific individual over the course 
 The exemplary data is as follows:
 ```{r}
 DistancePerTime_Data <- VidSync_Test_Data %>% 
@@ -128,6 +127,7 @@ DistancePerTime_Data <- VidSync_Test_Data %>%
   select(subsample, fish_ID, time_sec, distance_cm_per_sec)
 ```
 ##Proportion of Forage Behaviors
+
 The exemplary data is as follows:
 ```{r}
 ForageBehaviors_Data <- VidSync_Test_Data %>% 
@@ -192,7 +192,7 @@ Length_Data <- VidSync_Test_Data %>%
   arrange(subsample, fish_ID)
 ```
 ##Occupied Volumes
-This method makes use of delaunay triangulation to calculate the volumes of a three-dimensional point cloud using the Geometry package in R
+This method makes use of delaunay triangulation to calculate the volumes of a three-dimensional point cloud using the Geometry package in R ()
 ```{r}
 Volume_Data <- VidSync_Test_Data %>% 
   filter(!grepl("Surface_Shots.*", objects)) %>%
@@ -201,26 +201,42 @@ Volume_Data <- VidSync_Test_Data %>%
   arrange(subsample, fish_ID)
 
 Test_Volume <- Volume_Data %>% 
-  filter(fish_ID == 1) %>% #Using a single volume output from a subsample as a volume example
+  filter(fish_ID == 1) %>% #Using a single volume output from a subsample as an example data point
   select(X, Y, Z) %>%
   as.matrix() %>%
   geometry::convhulln("FA") 
-  print(Test_Volume$vol) #displayed in cubic centimeters
+  print(Test_Volume$vol) #Displayed in cubic centimeters
 #This can also be run in a for loop over the entire dataset from the sample to occupy a data frame with the collected volume data
 Vol_forloop <- 
 for (i in 1:33) {
   Volume_Data %>%
-    filter(fish_ID == i) %>%
-    select(X, Y, Z) %>%
-    as.matrix() %>%
-    geometry::convhulln("FA") 
+  filter(fish_ID == i) %>%
+  select(X, Y, Z) %>%
+  as.matrix() %>%
+  geometry::convhulln("FA") 
 }
 ```
-##Overlapping Volumes
-```{r}
-
-```
 #Discussion
+##Nearest Neighbor Distance
+
+    Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954).
+    
+##Distance per Time
+
+##Proportion of Forage Behaviors
+
+##Centroid to Forage Attempt Point
+
+##Distance from Surface
+
+##Fork Length Calculations
+
+##Occupied Volumes
+
+    Previously the habitat use of a foraging fish has been defined as a two dimensional area made from position estimations of fish from snorkel observations. 
+    hypervolume definition
+    recent hypervolume work -- Blonder et al 2013
+    
 
 #Acknowledgements
 
@@ -259,6 +275,8 @@ Nielsen, J. L., Lisle, T. E., & Ozaki, V. 1994. Thermally stratified pools and t
 
 Rossi, Gabriel J., Power, Mary E., Pneh, Shelly, Neuswanger, Jason R. 2019 in preparation. Seasonal Foraging Mode Shifts of Oncorhynchus mykiss in a Mediterranean Stream.
 
+RStudio Team. 2015. RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/.
+
 Steingrímsson, S. Ó., & Grant, J. W. 2008. Multiple central‐place territories in wild young‐of‐the‐year Atlantic salmon Salmo salar. Journal of Animal Ecology, 77(3): 448-457.
 
 Steingrimsson, S.Ó., and Grant, J.W.A. 2011. Shape of single and multiple central-place territories in a stream-dwelling fish. Ethology 117: 1170-1177.
@@ -266,3 +284,7 @@ Steingrimsson, S.Ó., and Grant, J.W.A. 2011. Shape of single and multiple centr
 Tunney, T. D., & Steingrímsson, S. Ó. 2012. Foraging mode variation in three stream‐dwelling salmonid fishes. Ecology of Freshwater Fish, 21(4): 570-580.
 
 Walton, Izaak. 1655. The Compleat Angler, or, The Contemplative Man's Recreation : Being a Discourse of Rivers, and Fish-Ponds, and Fish, and Fishing, Not Unworthy the Perusal of Most Anglers. London: Printed by T. M. [ie. T. Maxey] for Rich. Marriot, and are to be sold at his shop. Print.
+
+Wickham, Hadley. 2018. stringr: Simple, Consistent Wrappers for
+Common String Operations. R package version 1.3.1.
+https://CRAN.R-project.org/package=stringr
