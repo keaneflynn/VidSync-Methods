@@ -1,7 +1,7 @@
 ---
 title: 'Videogrammetry Metrics for Assessing Fish Foraging Behavior: Implications
   for Behavioral Ecology and Management'
-author: "Keane Flynn, Weston Slaughter, Gabriel Rossi, Mary Power, Stephanie Carlson"
+author: "Keane Flynn"
 date: "4/30/2019"
 output:
   word_document: default
@@ -9,55 +9,41 @@ output:
 ---
 #**Introduction**
 
-    Fish foraging behavior has long been a topic of natural observation, wonder, and recreational curiosity (Walton 1655). In recent years, this area of observation has extended beyond the realm as an enigmatic phenomenon and taken its place as a series of qualitative metrics in fisheries ecology. But with recent advances in computer technologies and programming languages, we are capable of extending these qualitatives behavioral metrics into quantitative values which can be further mathematically and statistically analyzed to show distinct differences in behavior. These differences in foraging behaviors have been shown to be linked to changes in physical habitat characteristics that might be indicative of decreasing habitat quality for foraging fish (Rossi et al. 2019 in prep; Steingrímmson 2012; Fausch et al. 1997).
-    Using the three dimensional videogrammetric program VidSync, quantifying previously generalized qualitative/quantitative values has become a relatively easy process that has the potential to offer results with more statistical significance than previous behavioral observation methods (Neuswanger 2014). This method makes use of two underwater cameras mounted in a fixed location relative to one another recording simultaneous video of fish behavior. Doing so allows for an almost entirely non-invasive way to record fish behavior, whereas many current methods rely on snorkel observations. Once the videos have been processed, an   X, Y, Z coordinate, a timecode, and a behavioral observation type are assigned to each point created for the video sample in the program. These coordinates, timecodes, and observations can then be exported and processed into code-based programs to create statistical and graphical representations of the data collected.
-    This program offers a number of advantages to traditional fish foraging observations, the largest of which being ease of quantifying spatial habitat use metrics within sub-millimeter accuracy, which will be expanded upon in the methods section. Additionally, this method of observation allows to expand forage observations beyond focal animal sampling, which has been the most common method for recording fish behavior in natural experiments, to other methods of behavior sampling methods such as sampling all occurrences of behaviors, sequence sampling, and scan sampling (Altmann 1974). While previous field observation methods could only account for one of these observation methods based on physical restrictions, replayable video allows for a higher confidence in behavioral observation assignment. Being able to track multiple individuals throughout a video sample allows for a complete assessment of behavioral observations for all individuals in the sample, hence creating a larger sample size for improved statistical analysis.
-    In previous research, these estimations of distances travelled, area of habitat, size of subjects, specific foraging patches, etc. conducted during snorkel surveys were capable of assigning numeric values to these metrics, but with a higher degree of uncertainty (Nakano et al. 1999a; Nielsen 1992; Steingrímsson & Grant 2008). While some of these methods have proved useful for changes in habitat usage, these methods are inherently based on location estimations and lack critical pieces of information for properly classifying habitat use. The issue with these previously used methods is that the metrics for habitat use is generally two-dimensional, which disregards many phenomenon such as physical habitat characteristics and location of prey input that might affect location of fish along the Z-axis (Figure 1).
+          Fish foraging behavior has long been a topic of natural observation,  wonder, and recreational curiosity (Walton 1655). For decades, fisheries scientists have also observed foraging behavior and considered the implications of forging behavior on fish growth and energetics (Fuasch 1984; Hughes and Dill 1990; Hayes et al. 2000), adaptation to habitat variability and contexts (Dill 1983; Fausch et al. 1997; Nislow et al. 1998; Nielson 1992), niche partitioning between sympatric species (Nakano et al. 1999a) and ontogeny (Sánchez-Hernández et al. 2012). A major challenge in the scientific study of foraging behavior has been limitations associated with visual observation, including: (1) poor estimation of quantities such as  distance, length, and time, (2) the inability to follow multiple focal animals at one time, (3) the inability to review a behavioral sequence or to share with multiple observers, (4) the inability to deal with quick or fleeting  behaviors in real time, and (5) making observations in a non-invasive method to retain natural behavior (Altmann 1974, Neuswanger 2016). Recent advances in videogrammetry and computer programming technologies have provided technological solutions for some of these problems and made it possible to collect precise quantitative and qualitative measurements of animal behavior and interactions in 3-dimensional space (Neuswanger 2016, Hughes and Kelly 1996; Vivancos and Closs 2015, Piccolo et al. 2007).
+          The videogrammetric program Vidsync represents one of the first open source software programs to provide quantitative 3-D functionality to fish behavior ecology (Neuswanger 2016). Vidsync is a novel software program that allows the user to triangulate a 3D position, in relative space, from two or more known lines of sight (Neuswanger 2016a). The software was developed for in situ study of juvenile chinook drift-feeding behavior and growth rates (Neuswanger et al. 2014). Data collection is accomplished by calibration of two or more simultaneous in-stream videos via a dual-plane calibration frame with known, uniform distances between each point across the X, Y, Z axis (Figure 1). The primary output data from the Vidsync analysis was X, Y, Z location, time, an object (subsample and fish identification number), event (foraging or interactive behavior), or measurement (e.g. length and z-axis location of the surface) (Figure 2). These coordinates, timecodes, and observations can then be exported and processed into code-based programs to create statistical and graphical representations of the data collected.
+    
+![**Figure 1** Calibration frame used in the VidSync program to calibrate the two videos to calculate positions in relative space](VidSyncFrame.png)
 
-![**Figure 1** Profile view of a pool-riffle sequence with X, Y, Z planes relative to a fish maintaining positive rheotaxis.](XYZPlanes.png)
-  
-    We hope to address some of the potential uses of these methods, but also realize that there are situations in which it might not be in the best interest to use these methods: they involve more post-capture editing and analyzation than that of snorkel observations, plotting movement movement points and territories can be more complex than doing so using the animal movement extension in ArcView (Hooge & Eichenlaub 2000). Given the resources to use this method are available, we find that it has many attributes that make up for the shortcomings of previously used methods. In this paper, we will elaborate upon the metrics that can be accurately derived using VidSync and the ecological implications of each. 
+![**Figure 2** Profile view of a pool-riffle sequence with X, Y, Z planes relative to a fish maintaining positive rheotaxis.](XYZPlanes.png)
 
-#Methods
+          Although videogrammetric programs such as Vidsync have allowed for profound improvements in the functional ability to track and quantify animal behavior, locations and movement, there has yet to be an effort to synthesize classical ethology and foraging ecology methods with output from the 3-D videogrammetric tools. In addition, the possibility of using behavioral states or changes in threshold behaviors as indicators of environmental change for resource managers is enhanced by the quantitively power of 3-D videogrammetrics (Sih et al. 2011). However, this application of videogrammetry has not been explored. In this paper we will introduce a set of specific methods to quantify behavioral states and behavioral gradients in juvenile salmonids using the 3-D program Vidsync focusing on behaviors with a long history of use in foraging ecology. We will also link the quantitative methods for evaluating these behaviors to potential management applications such as instream flow science or habitat restoration monitoring specifically targeting juvenile salmonids. Our objective is to provide a methodological and contextual basis for synthesize classical methods in juvenile foraging ecology with novel videogrammetric tools, and to consider the application of these methods to some targeted management scenarios.
+
+#**Methods**
+##**Overview**
+
+![**Figure 3** Flow chart of VidSync use from field to analysis](VidSync Flow Chart.png)
+
+##**Data Collection**
 ###*Streamside set up and use*
 
-    For underwater videography, we found that using GoPro cameras allowed for a relatively low-cost method of video capture as well as wide angle lens to capture all fish in the study area continuously. To properly mount these cameras for multiple samples at the same site, we found that having multiple mount points to the streambed via rebar hammered into the alluvium ensures that the same habitat area is recorded each time. To fix the cameras to the mount, a simple device made from PVC pipe and bicycle mounts covers the widest amount of habitat while minimizing area where the camera angles do not overlap (Figure 2). 
+          LaGrangian vs Eularian
+          
+          For underwater videography, we found that using GoPro cameras allowed for a relatively low-cost method of video capture as well as wide angle lens to capture all fish in the study area continuously. To properly mount these cameras for multiple samples at the same site, we found that having multiple mount points to the streambed via rebar hammered into the alluvium ensures that the same habitat area is recorded each time. To fix the cameras to the mount, a simple device made from PVC pipe and bicycle mounts covers the widest amount of habitat while minimizing area where the camera angles do not overlap (Figure 2). 
     
-![**Figure 2** Fusion 360 schematic for how to mount GoPro cameras for VidSync applications](GoProMountSchematic.png)
+![**Figure 4** Fusion 360 schematic for how to mount GoPro cameras for VidSync applications](GoProMountSchematic.png)
     
-    When recording behavior, especially in low-flow situations, it is important to enter the river to mount the camera from downstream to avoid increasing turbidity in the study area. That being said, this method should not be employed in areas of high turbidity as behavior observations will be abysmal. While it depends on the specific study, we recommend roughly 25-30 minutes of recording to ensure usable behavioral observations are recorded. Immediately following the recording period, someone must enter the creek with a calibration frame (from downstream to avoid increasing turbidity) and place it in front of the cameras where all points on the frame are visible (Figure 3). 
-    
-![**Figure 3** Calibration frame used in the VidSync program to calibrate the two videos to calculate positions in relative space](VidSyncFrame.png)
+          When recording behavior, especially in low-flow situations, it is important to enter the river to mount the camera from downstream to avoid increasing turbidity in the study area. That being said, this method should not be employed in areas of high turbidity as behavior observations will be abysmal. While it depends on the specific study, we recommend roughly 25-30 minutes of recording to ensure usable behavioral observations are recorded. Immediately following the recording period, someone must enter the creek with a calibration frame (from downstream to avoid increasing turbidity) and place it in front of the cameras where all points on the frame are visible (Figure 3). 
 
 ###*Test Measurements*
 
-    Once the videos have been recorded, loaded into VidSync, and calibrated, this calibrated video must be tested to ensure that the measurements are valid (Neuswanger 2014; Neuswanger 2016b). Using the known distances between points on the calibration frame, test measurements can be made along the X (front frame to rear frame), Y, and Z axes using the length function in the program to ensure that what you are measuring in VidSync matches empirical measurement data (Figure 1). 
+          Once the videos have been recorded, loaded into VidSync, and calibrated, this calibrated video must be tested to ensure that the measurements are valid (Neuswanger 2014; Neuswanger 2016b). Using the known distances between points on the calibration frame, test measurements can be made along the X (front frame to rear frame), Y, and Z axes using the length function in the program to ensure that what you are measuring in VidSync matches empirical measurement data (Figure 1).
+##**Data Analysis**
+          
+          VidSync tutorials and use have been well established for creating data from video observations (Neuswanger 2014; Neuswanger 2016b). However, its use for specific metric that might have ecological implications have not been well documented. In this section, we will look in-depth at 6 methods of data analysis, including: proportion of forage behaviors, fork length calculations (FL), distance per time, nearest neightbor distance (NND), distance from surface, and occupied volume. For each of these analyses, we will look at the (1) use of each calculation in behavioral ecology, (2) the significance of each calculation, (3) how these measurements are made for this application, and (4) exemplary R code for each of these calculations.
 
-###*Video Period Selection*
+          For data analyzation, we will be using R-Studio to compute the following metrics (RStudio Team 2015). They can be imported into other softwares such as MATLAB and Wolfram Mathematica, however for the level of analyzation being performed below, we have found that using R-Studio is the most simple method with the most amount of support.
 
-    The first 5 minutes of the video will be discarded to allow for an adjustment period to allow fish to resume normal foraging behavior (Nakano et al. 1999a; Fausch et al. 1997). The video subsamples being analyzed will be chosen by stratified random sampling. First, we must, by a brief scan sample, find the most fish-dense 10 minute period of the recording. In order, each 30 second interval of the video is then assigned an integer (1-20) and using a random number generator, 6 random integers (1-20) representing a unique 30 second period are selected to make up a total of 3 minutes of data supported behavioral observations (Neuswanger 2014; Rossi et al. 2019 in prep). Each of these 6 chosen integers will represent a subsample within the sample video to allow for a period of total observation similar to what has been previously used with this method, however it allows for a higher sample size while removing any potential bias in sampling period.
-
-###*VidSync Use and Behavior Classification*
-
-    Once the desired subsample intervals are selected, the video has been calibrated and corrected for lens distortion, object and event types can then be created to classify subsamples and behavioral observations to be associated with recorded coordinate points (Neuswanger 2016b). The object types can be used to represent represent unique subsamples and will be exported into a vector named, "Object(s)" which will include the title of the object as well as the "index" which is used to represent an individual fish identification number. Additionally, the option to include a name with each object is given which will also be included in the "Object(s)" vector which should be used to identify species or specific individual fish if unique identification is possible. These object types should be saved as follows: Subsample_1, Subsample_2, Subsample_3, Subsample_4, Subsample_5, Subsample_6. 
-    The event types will be represented by the behavioral classifications assigned to each 3 second sample increment in each subsample, this length of time allows for classification of unique behaviors as well as tracking movement accurately with small temporal increments (Rossi et al. 2019 in prep). The behavior classifications, as well as additional points to be recorded, and their definitions have been used or adopted from prior behavioral studies with some modifications (Kalleberg 1958; Nielsen 1992; Nakano et al. 1999a). They are as follows:
-    
-    Benthic Forage: A distinct forage event targeted at the stream benthos.
-    Drift Forage: A fish maintaining positive rheotaxis to target prey carried through the water column in a sit-and-wait fashion. 
-    Search Forage: A fish covering large foraging patches in search of non-benthic prey.
-    Surface Strike: A fish making contact with the water surface to obtain prey.
-    Aspirating: A fish visibly flaring their gills while minimally moving and making no forage attempts. 
-    Attack: A fish making contact with another fish in an act of territoriality.
-    Feint: Adopted from a fencing term, a fish will charge another in an act of territoriality, but make no contact and quickly resume foraging thereafter.
-    Movement: Any movement throughout the pool not focused on foraging.
-    Length: A fork length measurement taken by creating a point at the nose and the fork of the caudal fin and using the three-dimensional distance formula to calculate length.
-    Surface Shots: Points taken on the surface (usually of an easily identifiable floating object) to record a Z-plane value for use in determining the distance fish are holding from the surface.
-
-##R-code and Exemplary Data for Quantitative and Qualitative Behavioral Metrics
-
-    For data analyzation, we will be using R-Studio to compute the following metrics (RStudio Team 2015). They can be imported into other softwares such as MATLAB and Wolfram Mathematica, however for the level of analyzation being performed below, we have found that using R-Studio is the most simple method with the most amount of support.
-###Loading Necessary Libraries
-```{r setup, include = TRUE, message = FALSE}
+```{r setup, include = FALSE, message = FALSE}
 library(dplyr)
 library(readr)
 library(tidyverse)
@@ -67,9 +53,9 @@ library(rgl)
 library(zoo)
 library(stringr)
 ```
-##Importing VidSync CSV File
+###*Importing VidSync CSV File*
 
-    Data from VidSync can either be exported as an XML or CSV file, for our application we will be exporting it as the latter into R for analyzation. Upon importing it, we will be cleaning up some of the data vectors using regular expression matching for ease of operation through the Stringr package in R (Whickam 2018). 
+          Data from VidSync can either be exported as an XML or CSV file, for our application we will be exporting it as the latter into R for analyzation. Upon importing it, we will be cleaning up some of the data vectors using regular expression matching for ease of operation through the Stringr package in R (Whickam 2018). 
 ```{r warning=FALSE}
 VidSync_Test_Data <- readr::read_csv(file = "VidSync-TestData.csv", 
                              skip = 2,
@@ -82,7 +68,7 @@ VidSync_Test_Data <- readr::read_csv(file = "VidSync-TestData.csv",
 ```
 ##Nearest Neighbor Distance
 
-    Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954). NND is calculated by finding the nearest neighbor to each unique fish over the course of a subsample. The final NND column will return a single NND value for each fish in a subsample and represent the closest nearest neighbor for each fish and exclude any larger distances (in cm) so as to not skew the data away from any values that are the absolute nearest neighbor point over the course of the subsample. It is important to note that subsamples with only one observed fish will produce an NND that is infinite and should be dealt with accordingly when graphing/calculating statistics of these values.
+          Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954). NND is calculated by finding the nearest neighbor to each unique fish over the course of a subsample. The final NND column will return a single NND value for each fish in a subsample and represent the closest nearest neighbor for each fish and exclude any larger distances (in cm) so as to not skew the data away from any values that are the absolute nearest neighbor point over the course of the subsample. It is important to note that subsamples with only one observed fish will produce an NND that is infinite and should be dealt with accordingly when graphing/calculating statistics of these values.
     
     The exemplary data is as follows:
 ```{r}
@@ -133,6 +119,20 @@ DistancePerTime_Data <- VidSync_Test_Data %>%
 
     To assign a behavior type we use regular expressions to identify the behavior from the predetermined object type as specified above in the behavioral classification section. After each sample point has been identified and placed in a bin of behavior types, specific behaviors can then be filtered out depending upon the target variables (i.e. only foraging behavior types).
     
+    Once the desired subsample intervals are selected, the video has been calibrated and corrected for lens distortion, object and event types can then be created to classify subsamples and behavioral observations to be associated with recorded coordinate points (Neuswanger 2016b). The object types can be used to represent represent unique subsamples and will be exported into a vector named, "Object(s)" which will include the title of the object as well as the "index" which is used to represent an individual fish identification number. Additionally, the option to include a name with each object is given which will also be included in the "Object(s)" vector which should be used to identify species or specific individual fish if unique identification is possible. These object types should be saved as follows: Subsample_1, Subsample_2, Subsample_3, Subsample_4, Subsample_5, Subsample_6. 
+    The event types will be represented by the behavioral classifications assigned to each 3 second sample increment in each subsample, this length of time allows for classification of unique behaviors as well as tracking movement accurately with small temporal increments (Rossi et al. 2019 in prep). The behavior classifications, as well as additional points to be recorded, and their definitions have been used or adopted from prior behavioral studies with some modifications (Kalleberg 1958; Nielsen 1992; Nakano et al. 1999a). They are as follows:
+    
+    Benthic Forage: A distinct forage event targeted at the stream benthos.
+    Drift Forage: A fish maintaining positive rheotaxis to target prey carried through the water column in a sit-and-wait fashion. 
+    Search Forage: A fish covering large foraging patches in search of non-benthic prey.
+    Surface Strike: A fish making contact with the water surface to obtain prey.
+    Aspirating: A fish visibly flaring their gills while minimally moving and making no forage attempts. 
+    Attack: A fish making contact with another fish in an act of territoriality.
+    Feint: Adopted from a fencing term, a fish will charge another in an act of territoriality, but make no contact and quickly resume foraging thereafter.
+    Movement: Any movement throughout the pool not focused on foraging.
+    Length: A fork length measurement taken by creating a point at the nose and the fork of the caudal fin and using the three-dimensional distance formula to calculate length.
+    Surface Shots: Points taken on the surface (usually of an easily identifiable floating object) to record a Z-plane value for use in determining the distance fish are holding from the surface.
+    
     The exemplary data is as follows:
 ```{r}
 ForageBehaviors_Data <- VidSync_Test_Data %>% 
@@ -149,24 +149,7 @@ ForageBehaviors_Data <- VidSync_Test_Data %>%
   arrange(subsample, fish_ID, time_sec) %>% 
   select(subsample, fish_ID, time_sec, Behaviors)
 ```
-##Centroid to Forage Attempt Point
 
-    It is important to note that this chunk of code is only relevant in scenarios where the created points over a given subsample if points are recorded at specific forage events rather than sequential 3 second intervals throughout each subsample (Neuswanger 2014; Glass 2013).
-    
-    The exemplary data is as follows:
-```{r}
-ControidToForage_Data <- VidSync_Test_Data %>% 
-  filter(!grepl("Surface_Shots.*", objects)) %>%
-  filter(!grepl("^Length.*", event)) %>% 
-  group_by(fish_ID) %>% 
-  mutate(median_X = median(X),
-         median_Y = median(Y),
-         median_Z = median(Z)) %>% 
-  mutate(distance_to_forage_point_cm = sqrt((X - median_X)^2 + 
-                                        (Y - median_Y)^2 +
-                                        (Z - median_Z)^2)) %>% 
-  select(subsample, fish_ID, time_sec, distance_to_forage_point_cm)
-```
 ##Distance from Surface
 
     
@@ -217,6 +200,7 @@ Test_Volume <- Volume_Data %>%
   as.matrix() %>%
   geometry::convhulln("FA") 
   print(Test_Volume$vol) #Displayed in cubic centimeters
+  
 #This can also be run in a for loop over the entire dataset from the sample to occupy a data frame with the collected volume data
 Vol_forloop <- 
 for (i in 1:33) {
@@ -228,21 +212,14 @@ for (i in 1:33) {
 }
 ```
 #Discussion
-###*Nearest Neighbor Distance*
 
-    Nearest neighbor distance (NND) has historically been used as a metric for understanding inter/intraspecies interactions as well as making observations about general trends regarding animal density in a study region (Clark 1954).
-    
-###*Distance per Time*
+challenges of using
 
-###*Proportion of Forage Behaviors*
+    This study involved both Lagrangian and Eulerian sampling of organisms in the stream environment. The Lagrangian approach involves tracking an organism through time and space, while the Eulerian approach involves repeated sampling of animal distribution at fixed points in space and time (Smouse et el. 2010, Price 2006). In Elder Creek video of fish behavior was used to track individuals through time and space (Lagrangian) and to take scan samples of fish behavior over a fixed time interval (Eulerian). 
 
-###*Centroid to Forage Attempt Point*
 
-###*Distance from Surface*
 
-###*Fork Length Calculations*
-
-###*Occupied Volumes*
+However, Lagrangian analysis in vidsync can also be done by moving the cameras to track fish (as Jason did in his Chinook feeding studies) rather than having the cameras in a fixed point. 
 
     Previously the habitat use of a foraging fish has been defined as a two dimensional area made from position estimations of fish from snorkel observations. 
     hypervolume definition
@@ -253,9 +230,13 @@ for (i in 1:33) {
 
 
 #Citations
-Altmann, J. 1974. Observational study of behavior: sampling methods. Behaviour, 49(3-4), 227-266.
+Altmann, J. 1974. Observational study of behavior: sampling methods. Behaviour, 49(3-4): 227-266.
 
 Clark, P. J., & Evans, F. C. 1954. Distance to nearest neighbor as a measure of spatial relationships in populations. Ecology, 35(4): 445-453.
+
+Dill, L. M. 1983. Adaptive flexibility in the foraging behavior of fishes. Canadian Journal of Fisheries and Aquatic Sciences, 40(4): 398-408.
+
+Fausch, K. D. 1984. Profitable stream positions for salmonids: relating specific growth rate to net energy gain. Canadian journal of zoology, 62(3): 441-451.
 
 Fausch, K. D., Nakano, S., & Kitano, S. 1997. Experimentally induced foraging mode shift by sympatric charrs in a Japanese mountain stream. Behavioral Ecology, 8(4): 414-420.
 
@@ -264,6 +245,12 @@ Flore, L., Reckendorfer, W., & Keckeis, H. 2000. Reaction field, capture field, 
 Glass, T. 2013. Effects of water velocity and fish length on the shape and size of the foraging areas of juvenile salmonids.
 
 Grant, J. W., Weir, L. K., & Steingrímsson, S. Ó. 2017. Territory size decreases minimally with increasing food abundance in stream salmonids: Implications for population regulation. Journal of Animal Ecology, 86(6): 1308-1316.
+
+Hayes, J. W., Stark, J. D., & Shearer, K. A. 2000. Development and test of a whole-lifetime foraging and bioenergetics growth model for drift-feeding brown trout. Transactions of the American Fisheries Society, 129(2): 315-332.
+
+Hughes, N. F., & Dill, L. M. 1990. Position choice by drift-feeding salmonids: model and test for Arctic grayling (Thymallus arcticus) in subarctic mountain streams, interior Alaska. Canadian Journal of Fisheries and Aquatic Sciences, 47(10): 2039-2048.
+
+Hughes, N. F., & Kelly, L. H. 1996. New techniques for 3-D video tracking of fish swimming movements in still or flowing water. Canadian Journal of Fisheries and Aquatic Sciences, 53(11): 2473-2483.
 
 Hooge, P. N., & Eichenlaub, B. 2000. Animal movement extension to ArcView 2.0. USGS Alaska Science Center, Anchorage, AK.
 
@@ -284,15 +271,25 @@ Nielsen, J. L. 1992. Microhabitat-specific foraging behavior, diet, and growth o
 
 Nielsen, J. L., Lisle, T. E., & Ozaki, V. 1994. Thermally stratified pools and their use by steelhead in northern California streams. Transactions of the American Fisheries Society, 123(4): 613-626.
 
+Nislow, K. H., Folt, C., & Seandel, M. 1998. Food and foraging behavior in relation to microhabitat use and survival of age-0 Atlantic salmon. Canadian Journal of Fisheries and Aquatic Sciences, 55(1): 116-127.
+
+Piccolo, J. J., Hughes, N. F., & Bryant, M. D. 2007. The effects of water depth on prey detection and capture by juvenile coho salmon and steelhead. Ecology of freshwater fish, 16(3): 432-441.
+
 Rossi, Gabriel J., Power, Mary E., Pneh, Shelly, Neuswanger, Jason R. 2019 in preparation. Seasonal Foraging Mode Shifts of Oncorhynchus mykiss in a Mediterranean Stream.
 
 RStudio Team. 2015. RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL http://www.rstudio.com/.
+
+Sánchez-Hernández, J., Servia, M. J., Vieira-Lanero, R., & Cobo, F. 2012. Ontogenetic dietary shifts in a predatory freshwater fish species: the brown trout as an example of a dynamic fish species. In New advances and contributions to fish biology. IntechOpen.
+
+Sih, A., Ferrari, M. C., & Harris, D. J.2011. Evolution and behavioural responses to human‐induced rapid environmental change. Evolutionary applications, 4(2): 367-387.
 
 Steingrímsson, S. Ó., & Grant, J. W. 2008. Multiple central‐place territories in wild young‐of‐the‐year Atlantic salmon Salmo salar. Journal of Animal Ecology, 77(3): 448-457.
 
 Steingrimsson, S.Ó., and Grant, J.W.A. 2011. Shape of single and multiple central-place territories in a stream-dwelling fish. Ethology 117: 1170-1177.
 
 Tunney, T. D., & Steingrímsson, S. Ó. 2012. Foraging mode variation in three stream‐dwelling salmonid fishes. Ecology of Freshwater Fish, 21(4): 570-580.
+
+Vivancos, A., & Closs, G. P. 2015. Quantification and comparison of individual space-use strategies in foraging drift-feeding fish using fine-scale, multidimensional movement analysis. Canadian journal of fisheries and aquatic sciences, 72(11): 1760-1768.
 
 Walton, Izaak. 1655. The Compleat Angler, or, The Contemplative Man's Recreation : Being a Discourse of Rivers, and Fish-Ponds, and Fish, and Fishing, Not Unworthy the Perusal of Most Anglers. London: Printed by T. M. [ie. T. Maxey] for Rich. Marriot, and are to be sold at his shop. Print.
 
