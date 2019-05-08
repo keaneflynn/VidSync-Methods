@@ -7,6 +7,10 @@ output:
   word_document: default
   html_document: default
 ---
+###*Abstract*
+
+          
+
 #**Introduction**
 
           Fish foraging behavior has long been a topic of natural observation,  wonder, and recreational curiosity (Walton 1655). For decades, fisheries scientists have also observed foraging behavior and considered the implications of forging behavior on fish growth and energetics (Fuasch 1984; Hughes and Dill 1990; Hayes et al. 2000), adaptation to habitat variability and contexts (Dill 1983; Fausch et al. 1997; Nislow et al. 1998; Nielson 1992), niche partitioning between sympatric species (Nakano et al. 1999a) and ontogeny (Sánchez-Hernández et al. 2012). A major challenge in the scientific study of foraging behavior has been limitations associated with visual observation, including: (1) poor estimation of quantities such as  distance, length, and time, (2) the inability to follow multiple focal animals at one time, (3) the inability to review a behavioral sequence or to share with multiple observers, (4) the inability to deal with quick or fleeting  behaviors in real time, and (5) making observations in a non-invasive method to retain natural behavior (Altmann 1974, Neuswanger 2016). Recent advances in videogrammetry and computer programming technologies have provided technological solutions/mitigation for some of these problems and made it possible to collect precise quantitative and qualitative measurements of animal behavior and interactions in 3-dimensional space (Neuswanger 2016, Hughes and Kelly 1996; Vivancos and Closs 2015, Piccolo et al. 2007, Glass 2013).
@@ -48,11 +52,8 @@ output:
 ```{r setup, include = FALSE, message = FALSE}
 library(dplyr)
 library(readr)
-library(tidyverse)
-library(ggplot2)
 library(geometry)
 library(rgl)
-library(zoo)
 library(stringr)
 ```
 ###*Importing VidSync CSV File*
@@ -95,7 +96,7 @@ NND_Data <- VidSync_Test_Data %>%
 ```
 ##Distance per Time
 
-          Travel speeds were originally used as a variable of energy expedature when considering optimal foraging theory (Werner and Hall 1974). Recently, this idea has expanded into bioenergetics modeling, of which swimming speeds are considered into the negative flux of energy in net rate of energy intake (NREI) calculations (Fausch 1984; Hughes 1990; Hayes et al. 2000; Rosenfeld and Taylor 2009). These energy expenditures, when combined with energy intake via calculations of available prey and capture success can be converted into overall NREI values which tell us whether or not the biotic and abiotic conditions allow for potential energy profit (Fausch 1984; Hughes 1990).
+          Travel speeds were originally used as a variable of energy expedature when considering optimal foraging theory (Werner and Hall 1974). Recently, this idea has expanded into bioenergetics modeling, of which swimming speeds are considered into the negative flux of energy in net rate of energy intake (NREI) calculations (Fausch 1984; Hughes 1990; Hayes et al. 2000; Rosenfeld and Taylor 2009; Li and Brocksen 1977; Brett and Glass 1973). These energy expenditures, when combined with energy intake via calculations of available prey and capture success can be converted into overall NREI values which tell us whether or not the biotic and abiotic conditions allow for potential energy profit (Fausch 1984; Hughes 1990). 
           Calculating distance per time is done by tracking a specific individual over the course of a subsample and dividing the distance travelled between each sample point by the time between each point. The distance between each point is calculated by emploring the use of the three dimensional distance formula (see NND calculation). 
     The exemplary code is as follows:
 ```{r}
@@ -118,19 +119,19 @@ DistancePerTime_Data <- VidSync_Test_Data %>%
 ```
 ##Proportion of Behaviors
     
-    The event types will be represented by the behavioral classifications assigned to each 3 second sample increment in each subsample, this length of time allows for classification of unique behaviors as well as tracking movement accurately with small temporal increments (Rossi et al. 2019 in prep). The behavior classifications, as well as additional points to be recorded, and their definitions have been used or adopted from prior behavioral studies with some modifications (Kalleberg 1958; Nielsen 1992; Nakano et al. 1999a). They are as follows:
+          Foraging behaviors have been an indicator of bioenergetically foravorable or unfavorable conditions in natural stream conditions (Fausch 1984; Hughes 1990). By breaking down foraging behaviors based on this 4 group classification, it provides indication of the location of primary prey input and potential bioenergetic outcomes to conditions based on prey input, habitat quality, and flow assessment. Using these habitat and behavioral assessments, we can make general assessments to bioenergentic conditions based on foraging behaviors.
+          To convert behavioral assessments to useful data linked to location-based sample points with associated timecondes, the behavior types will be recorded in the VidSync program as event types. The event types input will be represented by the behavioral classifications assigned to each 3 second sample increment in each subsample. This length of time allows for classification of unique behaviors as well as tracking movement accurately with small temporal increments (Rossi et al. 2019 in prep). The behavior classifications, as well as additional points to be recorded, and their definitions have been used or adopted from prior behavioral studies with some modifications (Kalleberg 1958; Nielsen 1992; Nakano et al. 1999a). They are as follows:
     
-    *Benthic Forage*: A distinct forage event targeted at the stream benthos.
-    *Drift Forage*: A fish maintaining positive rheotaxis to target prey carried through the water column in a sit-and-wait fashion. 
-    *Search Forage*: A fish covering large foraging patches in search of non-benthic prey.
-    *Surface Strike*: A fish making contact with the water surface to obtain prey.
-    *Aspirating*: A fish visibly flaring their gills while minimally moving and making no forage attempts. 
-    *Attack*: A fish making contact with another fish in an act of territoriality.
-    *Feint*: Adopted from a fencing term, a fish will charge another in an act of territoriality, but make no contact and quickly resume foraging thereafter.
-    *Movement*: Any movement throughout the pool not focused on foraging.
-    *Length*: A fork length measurement taken by creating a point at the nose and the fork of the caudal fin and using the three-dimensional distance formula to calculate length.
-    *Surface Shots*: Points taken on the surface (usually of an easily identifiable floating object) to record a Z-plane value for use in determining the distance fish are holding from the surface.
-    
+    Benthic Forage: A distinct forage event targeted at the stream benthos.
+    Drift Forage: A fish maintaining positive rheotaxis to target prey carried through the water column in a sit-and-wait fashion. 
+    Search Forage: A fish covering large foraging patches in search of non-benthic prey.
+    Surface Strike: A fish making contact with the water surface to obtain prey.
+    Aspirating: A fish visibly flaring their gills while minimally moving and making no forage attempts. 
+    Attack: A fish making contact with another fish in an act of territoriality.
+    Feint: Adopted from a fencing term, a fish will charge another in an act of territoriality, but make no contact and quickly resume foraging thereafter.
+    Movement: Any movement throughout the pool not focused on foraging.
+    Length: A fork length measurement taken by creating a point at the nose and the fork of the caudal fin and using the three-dimensional distance formula to calculate length.
+
     To assign a behavior type we use regular expressions to identify the behavior from the predetermined object type as specified above in the behavioral classification section. After each sample point has been identified and placed in a bin of behavior types using a nested "if-else" chain, specific behaviors can then be filtered out depending upon the target variables (i.e. only foraging behavior types).
     The exemplary code is as follows:
 ```{r}
@@ -150,12 +151,14 @@ ForageBehaviors_Data <- VidSync_Test_Data %>%
 ```
 
 ##Distance from Surface
-
-    The exemplary code is as follows:
+          
+          Analysis of stratification of fish foraging position has shown to be indicative of vary ecological conditions such as water quality stratification and location of prey input (Nakano 1999b; Nielsen 1994). Taking into consideration the fish foraging locations along the z-axis in combination with water quality conditions and prey availability, these locations can be indicative of relevant stream conditions that might influence juvenile salmonid health, prey availability, and growth potential (Nakano 1999b; Carter 2005).
+          The distance from surface data is created based upon the z-axis location of the median z-axis location of each recorded fish ID during a subsample. This data can then be combined with stage height, max depth, etc. data to create standardized metrics for avearge location of fish during a sample period.
+          The exemplary code is as follows:
 ```{r, warning=FALSE}
-DFS_Mean <- VidSync_Test_Data %>% 
+DFS_Median <- VidSync_Test_Data %>% 
   filter(grepl("Surface_Shots.*", objects)) %>% 
-  summarise(mean(Z)) %>% 
+  summarise(median(Z)) %>% 
   as.matrix()
 
 DistFromSurface_Data <- VidSync_Test_Data %>%
@@ -163,22 +166,24 @@ DistFromSurface_Data <- VidSync_Test_Data %>%
          !grepl("Surface_Shots.*", objects)) %>%
   select(subsample, fish_ID, time_sec, Z, event) %>% 
   group_by(fish_ID) %>%
-  mutate(mean = mean(Z)) %>%
-  mutate(DFS_cm = abs(mean - DFS_Mean)) %>% 
+  mutate(median = median(Z)) %>%
+  mutate(DFS_cm = abs(median - DFS_Median)) %>% 
   distinct(fish_ID, .keep_all = TRUE) %>% 
   select(subsample, fish_ID, DFS_cm)
 ```
 ##Fork Length Calculations
 
-    The exemplary code is as follows:
+          Fork length has been used as a standard measurement in fish taxa with homocercal caudal fins and to create length-weight regressions (Hoar 1939). Fork length measurements have found their place in behavioral ecology studies being  used with foraging territory locations to classify community hierarchies (Abbott and Dunbrack 1985; Nakano and Furukawa‐Tanaka 1994). Additionally, this method of fish length observation has the potential to be used in combination with visible external tagging methods (i.e. VIE tagging, thermal tagging, etc.) to monitor growth of unique individuals assuming they remain in the study area. This method would allow for substitution of electrofishing to monitor fish growth.
+          During each subsample, three length values should be taken for each fish to ensure that there are no outlier measurements. Fork length measurements are taken by using the length event type and adding a sample point at the snout and the fork of each fish. These points will be exported from VidSync with the same event type name and can then be grouped to apply the distance formula (see NND calculation) between these points to find fork length. The average of the three fork lengths taken for each fish are then taken to find the final fork length for each unique individual.
+          The exemplary code is as follows:
 ```{R}
 Length_Data <- VidSync_Test_Data %>% 
   filter(grepl("^Length.*", event)) %>% 
   na.omit() %>% 
   group_by(event) %>% 
-  mutate(length_mm = 10*sqrt((X - lag(X, default = first(X)))^2 + 
-                          (Y - lag(Y, default = first(Y)))^2) + 
-                          (Z - lag(Z, default = first(Z)))^2) %>% 
+  mutate(length_mm = 10*sqrt((X - lag(X, default = first(X)))^2 + #Multiplied by 10 since default measurements are in cm
+                             (Y - lag(Y, default = first(Y)))^2 + 
+                             (Z - lag(Z, default = first(Z)))^2)) %>% 
   filter(!length_mm == 0) %>% 
   group_by(subsample, fish_ID) %>% 
   summarise(length_mm = mean(length_mm)) %>% 
@@ -186,9 +191,8 @@ Length_Data <- VidSync_Test_Data %>%
 ```
 ##Occupied Volumes
 
-    Vivancos and Class looked into area use, but not volume. Glass 2013 looked into volume but not very in depth.
-
-    This method makes use of delaunay triangulation to calculate the volumes of a three-dimensional point cloud using the Geometry package in R ()
+          Fish territories have traditionally been measured as an area since quantifying z-axis position has been a difficult observation to make with snorkel survey in focal point sampling (Vivancos and Closs 2015; Steingrimmson and Grant 2008; Steingrimmson and Grant 2011). Hutchinson described an individual's niche as an N-dimensional hypervolume, with recent advances in behavioral observation technology we are now able to define this niche as a three dimensional volume as opposed to a two dimensional area (Hutchinson 1965). This can be done using convex hull modeling of a three dimensional point cloud of sample points from a subsample (Cornwell et al. 2006; Blonder et al. 2014). While there is limited use of this analytical method, we are able to increase the dimensionality of the hypervolume from what previous methodology allowed (Glass 2013). When combined with Eularian observations, changes in hypervolumes can be tracked in conjunction with any other variables collected in the study period such as streamflow, prey availability, water quality, etc. (Rossi unpublished).
+          This method makes use of delaunay triangulation to calculate the volumes of a three-dimensional point cloud using the convhulln function from the "Geometry" package in R (Habel et al. 2015). Each occupied volume is calculated by grouping data into that of individual fish in individual subsamples. Once unique volume data is obtained for each fish, it can then be coerced into total occupied volume data, average volumes, etc. Alternatively, these calculations can be made through the "Hypervolume" package in R (Blonder and Harris 2018). This method does provide additional services such as calculating overlapping volume between individuals sharing foraging territory.
     The exemplary code is as follows:
 ```{r}
 Volume_Data <- VidSync_Test_Data %>% 
@@ -230,14 +234,28 @@ However, Lagrangian analysis in vidsync can also be done by moving the cameras t
     
 
 #Acknowledgements
+
 "You better stay away from Copperhead Road" - Steve Earl
 
 #Citations
+Abbott, J. C., Dunbrack, R. L., & Orr, C. D. 1985. The interaction of size and experience in dominance relationships of juvenile steelhead trout (Salmo gairdneri). Behaviour: 241-253.
+
 Altmann, J. 1974. Observational study of behavior: sampling methods. Behaviour, 49(3-4): 227-266.
+
+Blonder, B., Lamanna, C., Violle, C., & Enquist, B. J. 2014. The n‐dimensional hypervolume. Global Ecology and Biogeography, 23(5): 595-609.
+
+Blonder, B., & Harris, David J. 2018. Hypervolume: High Dimensional Geometry and Set Operations Using Kernel Density Estimation, Support Vector Machines, and Convex Hulls. R package
+version 2.0.11. https://CRAN.R-project.org/package=hypervolume
+
+Brett, J. R., & Glass, N. R. 1973. Metabolic rates and critical swimming speeds of sockeye salmon (Oncorhynchus nerka) in relation to size and temperature. Journal of the Fisheries Board of Canada, 30(3): 379-387.
 
 Brown, G. E., & Brown, J. A. 1993. Do kin always make better neighbours?: the effects of territory quality. Behavioral Ecology and Sociobiology, 33(4), 225-231.
 
+Carter, K. 2005. The effects of dissolved oxygen on steelhead trout, coho salmon, and chinook salmon biology and function by life stage. California Regional Water Quality Control Board, North Coast Region.
+
 Clark, P. J., & Evans, F. C. 1954. Distance to nearest neighbor as a measure of spatial relationships in populations. Ecology, 35(4): 445-453.
+
+Cornwell, W. K., Schwilk, D. W., & Ackerly, D. D. 2006. A trait‐based test for habitat filtering: convex hull volume. Ecology, 87(6): 1465-1471.
 
 Dill, L. M. 1983. Adaptive flexibility in the foraging behavior of fishes. Canadian Journal of Fisheries and Aquatic Sciences, 40(4): 398-408.
 
@@ -251,15 +269,26 @@ Glass, T. 2013. Effects of water velocity and fish length on the shape and size 
 
 Grant, J. W., Weir, L. K., & Steingrímsson, S. Ó. 2017. Territory size decreases minimally with increasing food abundance in stream salmonids: Implications for population regulation. Journal of Animal Ecology, 86(6): 1308-1316.
 
+Habel, K., Grasman, R., Gramacy, Robert B., Stahel, A., & Sterratt, David C. 2015. geometry: Mesh
+Generation and Surface Tesselation. R package version 0.3-6. https://CRAN.R-project.org/package=geometry
+
 Hayes, J. W., Stark, J. D., & Shearer, K. A. 2000. Development and test of a whole-lifetime foraging and bioenergetics growth model for drift-feeding brown trout. Transactions of the American Fisheries Society, 129(2): 315-332.
+
+Hoar, W. S. 1939. The weight-length relationship of the Atlantic salmon. Journal of the Fisheries Board of Canada, 4(5): 441-460.
+
+Hooge, P. N., & Eichenlaub, B. 2000. Animal movement extension to ArcView 2.0. USGS Alaska Science Center, Anchorage, AK.
 
 Hughes, N. F., & Dill, L. M. 1990. Position choice by drift-feeding salmonids: model and test for Arctic grayling (Thymallus arcticus) in subarctic mountain streams, interior Alaska. Canadian Journal of Fisheries and Aquatic Sciences, 47(10): 2039-2048.
 
 Hughes, N. F., & Kelly, L. H. 1996. New techniques for 3-D video tracking of fish swimming movements in still or flowing water. Canadian Journal of Fisheries and Aquatic Sciences, 53(11): 2473-2483.
 
-Hooge, P. N., & Eichenlaub, B. 2000. Animal movement extension to ArcView 2.0. USGS Alaska Science Center, Anchorage, AK.
+Hutchinson, G. E. 1965. The ecological theater and the evolutionary play. Yale University Press.
 
 Kalleberg, H. 1958. Observations in a stream tank of territoriality and competition in juvenile salmon and trout. Rep. Inst. Freshw. Res. Drottninigholm, 39: 55-98.
+
+Li, H. W., & Brocksen, R. W. 1977. Approaches to the analysis of energetic costs of intraspecific competition for space by rainbow trout (Salmo gairdneri). Journal of Fish Biology, 11(4): 329-341.
+
+Nakano, S., & Furukawa‐Tanaka, T. 1994. Intra‐and interspecific dominance hierarchies and variation in foraging tactics of two species of stream‐dwelling chars. Ecological Research, 9(1): 9-20.
 
 Nakano, S., Fausch, K. D., & Kitano, S. 1999a. Flexible niche partitioning via a foraging mode shift: a proposed mechanism for coexistence in stream‐dwelling charrs. Journal of Animal Ecology, 68(6): 1079-1092.
 
