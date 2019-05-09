@@ -31,7 +31,7 @@ output:
 ##**Field Methods**
 ###*Streamside set up and use*
 
-          For underwater videography, we found that using GoPro cameras allowed for a relatively low-cost method of video capture as well as wide angle lens to capture all fish in the study area continuously. Using Eularian observational methodology, creating a fixed mount system to track behavioral observations against changes in habitat has proved an effective method (Vivancos and Closs 2015; Piccolo 2005; Rossi et al. 2019 in prep). To properly mount these cameras for repeated samples, we found that having multiple mount points to the streambed via rebar hammered into the alluvium ensures that the same habitat area is recorded each time. To fix the cameras to the mount, a simple device constructed from PVC pipe and bicycle mounts covers the widest amount of habitat while minimizing area where the camera angles do not overlap (Figure 4). When tracking specific individuals independent of changes in habitat, use of LaGrangian observations can be performed through varaible mounting throughout the habitat tracking the target population (Neuswanger 2014). Mounting cameras for this method of observation can be performed more simply using the same materials fixed in a T-shape using a single instream rebar mount for ease of adjusting for location and angle of recording.
+          For underwater videography, we found that using GoPro cameras allowed for a relatively low-cost method of video capture as well as wide angle lens to capture all fish in the study area continuously. Using Eularian observational methodology, creating a fixed mount system to track behavioral observations against changes in habitat has proved an effective method (Smouse et al. 2010; Vivancos and Closs 2015; Piccolo 2005; Rossi et al. 2019 in prep). To properly mount these cameras for repeated samples, we found that having multiple mount points to the streambed via rebar hammered into the alluvium ensures that the same habitat area is recorded each time. To fix the cameras to the mount, a simple device constructed from PVC pipe and bicycle mounts covers the widest amount of habitat while minimizing area where the camera angles do not overlap (Figure 4). When tracking specific individuals independent of changes in habitat, use of LaGrangian observations can be performed through varaible mounting throughout the habitat tracking the target population (Neuswanger 2014). Mounting cameras for this method of observation can be performed more simply using the same materials fixed in a T-shape using a single instream rebar mount for ease of adjusting for location and angle of recording.
 ![**Figure 4** Fusion 360 schematic for how to mount GoPro cameras for Eularian observation VidSync applications](GoProMountSchematic.png)
 
           When recording behavior, especially in low-flow situations, it is important to enter the river to mount the camera from downstream to avoid increasing turbidity in the study area. That being said, this method should not be employed in areas of high turbidity or poor lighting as behavior observations will be abysmal (Neuswanger 2016a). While it depends on the specific study, we recommend roughly 25-30 minutes of recording to ensure useful behavioral observations. Immediately following the recording period, someone must enter the creek with a calibration frame (from downstream to avoid increasing turbidity) and place it in front of the cameras where all points on the frame are visible (Figure 1). 
@@ -145,11 +145,10 @@ ForageBehaviors_Data <- VidSync_Test_Data %>%
                      if_else(grepl("^Feint", event), "Feint", 
                      if_else(grepl("^Attack", event), "Attack",
                      if_else(grepl("^Surface_Strike", event), "Surface Strike", 
-                     if_else(grepl("^Movement", event), "Movement", "NA"))))))))) %>% #Note that "nip" has since been changed to the definition of "attack" and attack to feint
+                     if_else(grepl("^Movement", event), "Movement", "NA"))))))))) %>% 
   arrange(subsample, fish_ID, time_sec) %>% 
   select(subsample, fish_ID, time_sec, Behaviors)
 ```
-
 ##Distance from Surface
           
           Analysis of stratification of fish foraging position has shown to be indicative of vary ecological conditions such as water quality stratification and location of prey input (Nakano 1999b; Nielsen 1994). Taking into consideration the fish foraging locations along the z-axis in combination with water quality conditions and prey availability, these locations can be indicative of relevant stream conditions that might influence juvenile salmonid health, prey availability, and growth potential (Nakano 1999b; Carter 2005).
@@ -202,7 +201,7 @@ Volume_Data <- VidSync_Test_Data %>%
   arrange(subsample, fish_ID)
 
 Test_Volume <- Volume_Data %>% 
-  filter(fish_ID == 1) %>% #Using a single volume output from a subsample as an example data point
+  filter(fish_ID == 1) %>% #Using a point cloud output from a subsample as example
   select(X, Y, Z) %>%
   as.matrix() %>%
   geometry::convhulln("FA") 
@@ -220,23 +219,12 @@ for (i in 1:33) {
 ```
 #Discussion
 
-challenges of using
-
-    This study involved both Lagrangian and Eulerian sampling of organisms in the stream environment. The Lagrangian approach involves tracking an organism through time and space, while the Eulerian approach involves repeated sampling of animal distribution at fixed points in space and time (Smouse et el. 2010, Price 2006). In Elder Creek video of fish behavior was used to track individuals through time and space (Lagrangian) and to take scan samples of fish behavior over a fixed time interval (Eulerian). 
-
-
-
-However, Lagrangian analysis in vidsync can also be done by moving the cameras to track fish (as Jason did in his Chinook feeding studies) rather than having the cameras in a fixed point. 
-
-    Previously the habitat use of a foraging fish has been defined as a two dimensional area made from position estimations of fish from snorkel observations. 
-    hypervolume definition
-    recent hypervolume work -- Blonder et al 2013
-    
-
+          While the benefits of using VidSync paired with structured programming analysis include more precise and accurate data collection, tracking changes in qualitative and quatitative behavior metrics has proven to be an effective proxy for habitat changes when paired with dynamic environmental data (Neuswanger 2014; Rossi et al. 2019 in prep; Glass 2013). Many conservation efforts focus on improving hydrology conditions in hopes of improving habitat for impacted fish species. These efforts generally focus on improving the quantity of fish and their weighted usable habitat area but generally don't monitor the fish habitat quality (Bovee 1978). Incorporating VidSync use into river management projects would allow for a better assessment of the success of habitat enhancements by not only monitoring fish quantity, but also by the degree to which they are using their habitat (i.e. drift foraging vs. aspirating).
+          Implementing use of VidSync has many benefits in acute analysis of fish behavior as outlined in the methods section. It is, however, important to note that there are a number of drawbacks to using this program in research and monitoring applications. While the software is free, the cost of purchasing necessary recording and calibration equipment is expensive and requires more time to properly install at the study sites than simply snorkeling and recording observations. After rocording, there are a few issues that can be encountered since conditions are generally never as perfect as can be desired. The first issue in post-processing is the time it takes to process a video and gether data, especially in fish-dense videos which can take up to 8 hours. Next, cameras have a limited range of clear visibility and combined with potentially turbid conditions makes taking sample points, species identification, and correct behavioral assessment more difficult than under optimal conditions. Lastly, snorkeling methods do allow for a wider and more variable range of visibility while using fixed camera positions during a video sample could potentially exclude individuals that might be selectively foraging outside of the field of view which is a potential area for introducing bias.
+          Previous methods of fish behavioral observation have paved the way for creating these improved and refined metrics and have shown the relevance of fish observations in behavioral ecology. With this available improvement in monitoring and analysis we can apply these metrics with more confidence in the measurements taken and how they relate to changes in habitat.
 #Acknowledgements
 
-"You better stay away from Copperhead Road" - Steve Earl
-
+          I would like to thank the UC Berkeley cohort of Mary Power, Stephanie Carlson, Ted Grantham, and Albert Ruhi's labs that have provided tremendous support on this project. My sincerest gratitude is owed to Gabriel Rossi who first introduced me into the rabbit hole that is my love for studying fish and freshwater ecology in general and got me started exploring the possibilities of this program. Additionally, I would like to thank the Eel River Critical Zone Observatory and California SeaGrant for allowing us to work with them on many of their study sites and use these methods as part of larger research projects. I would lastly like to thank many bluegrass and southern rock musicians who provided much needed karaoke material on travels to and from the field. "You better stay away from Copperhead Road" - Steve Earl
 #Citations
 Abbott, J. C., Dunbrack, R. L., & Orr, C. D. 1985. The interaction of size and experience in dominance relationships of juvenile steelhead trout (Salmo gairdneri). Behaviour: 241-253.
 
@@ -246,6 +234,8 @@ Blonder, B., Lamanna, C., Violle, C., & Enquist, B. J. 2014. The n‐dimensional
 
 Blonder, B., & Harris, David J. 2018. Hypervolume: High Dimensional Geometry and Set Operations Using Kernel Density Estimation, Support Vector Machines, and Convex Hulls. R package
 version 2.0.11. https://CRAN.R-project.org/package=hypervolume
+
+Bovee, K. D. 1978. Probability-of-use criteria for the family Salmonidae (No. 4). Department of the Interior, Fish and Wildlife Service, Office of Biological Services, Western Energy and Land Use Team, Cooperative Instream Flow Service Group.
 
 Brett, J. R., & Glass, N. R. 1973. Metabolic rates and critical swimming speeds of sockeye salmon (Oncorhynchus nerka) in relation to size and temperature. Journal of the Fisheries Board of Canada, 30(3): 379-387.
 
@@ -320,6 +310,8 @@ RStudio Team. 2015. RStudio: Integrated Development for R. RStudio, Inc., Boston
 Sánchez-Hernández, J., Servia, M. J., Vieira-Lanero, R., & Cobo, F. 2012. Ontogenetic dietary shifts in a predatory freshwater fish species: the brown trout as an example of a dynamic fish species. In New advances and contributions to fish biology. IntechOpen.
 
 Sih, A., Ferrari, M. C., & Harris, D. J.2011. Evolution and behavioural responses to human‐induced rapid environmental change. Evolutionary applications, 4(2): 367-387.
+
+Smouse, P. E., Focardi, S., Moorcroft, P. R., Kie, J. G., Forester, J. D., & Morales, J. M. 2010. Stochastic modelling of animal movement. Philosophical Transactions of the Royal Society B: Biological Sciences, 365(1550): 2201-2211.
 
 Steingrímsson, S. Ó., & Grant, J. W. 2008. Multiple central‐place territories in wild young‐of‐the‐year Atlantic salmon Salmo salar. Journal of Animal Ecology, 77(3): 448-457.
 
